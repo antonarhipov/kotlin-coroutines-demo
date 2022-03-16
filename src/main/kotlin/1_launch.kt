@@ -1,11 +1,8 @@
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 
-val threadPool = Executors.newFixedThreadPool(2)
-val dispatcher = threadPool.asCoroutineDispatcher()
+//val threadPool = Executors.newFixedThreadPool(2)
+//val dispatcher = threadPool.asCoroutineDispatcher()
 
 fun process(n: Int): Int {
     println("process: ${Thread.currentThread()}")
@@ -18,10 +15,4 @@ fun main(): Unit = runBlocking {
     launch(Dispatchers.IO) {
         println(process(2))
     }
-
-    launch(dispatcher) {
-        println(process(5))
-    }
-
-    threadPool.shutdown()
 }

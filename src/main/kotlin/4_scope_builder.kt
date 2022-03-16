@@ -1,9 +1,7 @@
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.future.future
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.CompletableFuture
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
+
+// Read https://elizarov.medium.com/coroutine-context-and-scope-c8b255d59055
 
 fun main() = runBlocking {
     doWork()
@@ -11,13 +9,18 @@ fun main() = runBlocking {
 }
 
 suspend fun doWork() = coroutineScope {
-    launch {
+    println("1: ${coroutineContext}")
+
+    launch(Dispatchers.IO) {
+        println("2: ${coroutineContext}")
         delay(1000L)
-        println("World! - 1")
     }
     launch {
-        delay(1000L)
-        println("World! - 2")
+        while (true) {
+            println("3: ${coroutineContext}")
+            delay(1000L)
+        }
     }
+
     println("Done!")
 }
