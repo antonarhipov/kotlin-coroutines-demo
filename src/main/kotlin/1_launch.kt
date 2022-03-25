@@ -4,7 +4,12 @@ import java.util.concurrent.Executors
 //val threadPool = Executors.newFixedThreadPool(2)
 //val dispatcher = threadPool.asCoroutineDispatcher()
 
-fun process(n: Int): Int {
+//suspend fun process(n: Int): Int = withContext(dispatcher) {
+//    println("process: ${Thread.currentThread()}")
+//    return@withContext n
+//}
+
+suspend fun process(n: Int) : Int {
     println("process: ${Thread.currentThread()}")
     return n
 }
@@ -12,7 +17,7 @@ fun process(n: Int): Int {
 fun main(): Unit = runBlocking {
     println(Thread.currentThread())
 
-    launch(Dispatchers.IO) {
+    launch {
         println(process(2))
     }
 }
